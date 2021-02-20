@@ -7,7 +7,7 @@ public class ListReverse {
 
         ListNode listNode1 = new ListNode(1);
         ListNode listNode2 = new ListNode(2);
-        ListNode listNode3 = new ListNode(2);
+        ListNode listNode3 = new ListNode(3);
         ListNode listNode4 = new ListNode(4);
         ListNode listNode5 = new ListNode(5);
         listNode4.next = listNode5;
@@ -18,9 +18,9 @@ public class ListReverse {
 
         double d = 44.4 + 21.6 + 3.12;
 
-        System.out.println("== "+d);
+//        System.out.println("== "+d);
 
-//        System.out.println("   " + removeRepeatLListNode(listNode1));
+        System.out.println("   " + removeNthFromEnd(listNode1, 2));
     }
 
     // 合并两个有序链表
@@ -89,9 +89,11 @@ public class ListReverse {
     public static ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dunmy = new ListNode("0");
         dunmy.next = head;
+
         ListNode pre = dunmy;
         ListNode cur = dunmy;// 要删除的节点
         int i = 1;
+
         while (head != null) {
             if (i >= n) {
                 pre = cur;
@@ -101,6 +103,7 @@ public class ListReverse {
             i++;
         }
         pre.next = pre.next.next;
+
         return dunmy.next;
     }
 
@@ -129,6 +132,7 @@ public class ListReverse {
         }
         ListNode slow = head;
         ListNode fast = head.next;
+
         while (fast != slow) {
             if (fast == null || fast.next == null) {
                 return false;
