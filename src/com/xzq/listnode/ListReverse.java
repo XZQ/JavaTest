@@ -1,5 +1,7 @@
 package com.xzq.listnode;
 
+import java.util.LinkedList;
+
 public class ListReverse {
 
 
@@ -17,6 +19,7 @@ public class ListReverse {
 
 
         double d = 44.4 + 21.6 + 3.12;
+
 
 //        System.out.println("== "+d);
 

@@ -1,6 +1,7 @@
-package com.xzq.tree;
+package com.xzq.share;
 
 public class TreeNode {
+
     int val;
     TreeNode left;
     TreeNode right;
@@ -18,3 +19,4 @@ public class TreeNode {
         this.right = right;
     }
 }
+
