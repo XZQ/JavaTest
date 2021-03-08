@@ -5,8 +5,50 @@ public class TreeMain {
 
     public static void main(String[] args) {
 
+    }
+
+    boolean isValidBST(TreeNode root) {
+        return isValidBST(root, null, null);
+    }
+
+
+    boolean isValidBST(TreeNode root, TreeNode left, TreeNode right) {
+        if (root == null) {
+            return true;
+        }
+        if (left != null && root.val <= left.val) {
+            return false;
+        }
+        if (right != null && root.val >= right.val) {
+            return false;
+        }
+
+       return isValidBST(root.left,left,root);
 
     }
+
+
+    boolean isSameTree(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null) {
+            return true;
+        }
+        if (root1 != null && root2 == null) {
+            return false;
+        }
+        if (root1 == null && root2 != null) {
+            return false;
+        }
+        return isSameTree(root1.left, root2.left) && isSameTree(root1.right, root2.right);
+    }
+
+
+    void traverse(TreeNode root) {
+        // root 需要做
+        root.val += 1;
+        traverse(root.left);
+        traverse(root.right);
+    }
+
 
     private static boolean result = true;
     private static int max = 0;
