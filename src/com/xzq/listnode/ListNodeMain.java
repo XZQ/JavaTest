@@ -22,10 +22,34 @@ public class ListNodeMain {
 //        }
 
 
-
         removeNodeFromEnd(listNode1, 2);
 
     }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        int count = 0;
+        ListNode curr = head;
+        while (count != k && curr != null) {
+            curr = curr.next;
+            count++;
+        }
+
+        if (count == k) {
+            curr = reverseKGroup(curr, k);
+            while (count-- > 0) { //翻转
+                ListNode tmp = head.next;
+                head.next = curr;
+                curr = head;
+                head = tmp;
+            }
+            head = curr;
+        }
+        return head;
+    }
+
 
     /**
      * @param listNode

@@ -22,10 +22,33 @@ public class ArrayUnion {
 
 //        System.out.println(myPod(2, 15));
 
-        for (int i = 0; i < 10; i++) {
-            System.out.println((i / 2) + "  " + (i % 2));
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println((i / 2) + "  " + (i % 2));
+//        }
 
+        int[] ints = new int[]{1, 1, 2, 35};
+
+        System.out.println(removeDuplicates(ints));
+    }
+
+
+    //    26. 删除有序数组中的重复项
+    public static int removeDuplicates(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
         }
+        int i = 0;
+        int j = 1;
+        while (j < nums.length) {
+            if (nums[i] == nums[j]) {
+                j++;
+            } else {
+                nums[i + 1] = nums[j];
+                i++;
+                j++;
+            }
+        }
+        return i + 1;
     }
 
     public static int myPod(int x, int n) {
