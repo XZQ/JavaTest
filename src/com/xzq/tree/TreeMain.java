@@ -23,9 +23,15 @@ public class TreeMain {
             return false;
         }
 
-       return isValidBST(root.left,left,root);
+        return isValidBST(root.left, left, root);
 
     }
+
+//    public boolean hasPathSum(TreeNode root, int sum) {
+//        if (root == null) return false;
+//        if (root.left == null && root.right == null && root.val == sum) return true;
+//        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+//    }
 
 
     boolean isSameTree(TreeNode root1, TreeNode root2) {
