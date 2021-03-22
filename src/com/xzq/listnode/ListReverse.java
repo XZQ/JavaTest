@@ -21,8 +21,6 @@ public class ListReverse {
         double d = 44.4 + 21.6 + 3.12;
 
 
-//        System.out.println("== "+d);
-
         System.out.println("   " + removeNthFromEnd(listNode1, 2));
     }
 
@@ -37,20 +35,17 @@ public class ListReverse {
     // https://blog.csdn.net/qq_42124842/article/details/93302815
     // https://blog.csdn.net/Tong_Nan/article/details/89489621
     public static ListNode removeRepeatLListNode(ListNode listNode) {
-        if (listNode == null) {
-            return null;
-        }
-        if (listNode.next == null) {
+        if (listNode == null || listNode.next == null) {
             return listNode;
         }
         ListNode dunmy = new ListNode(0);
         dunmy.next = listNode;
+
         ListNode pre = dunmy;
         ListNode temp = listNode;
 
         while (temp != null && temp.next != null) {
             if (temp.next.obj == temp.obj) {
-                // 继续循环删除
                 Object obj = temp.obj;
                 while (temp != null && temp.obj == obj) {
                     temp = temp.next;

@@ -17,32 +17,11 @@ public class ListNodeTest {
 
 
         System.out.println(listNode1);
-//        System.out.println(reverse(listNode1));
-
         System.out.println(removeNthFromEnd1(listNode1, 2));
     }
 
 
     public static ListNode removeNthFromEnd1(ListNode head, int n) {
-
-//        ListNode dummy = new ListNode("0");
-//        dummy.next = head;
-//
-//        ListNode fast = dummy;
-//        ListNode slow = dummy;
-//
-//        for (int i = 0; i < n; i++) {
-//            fast = fast.next;
-//        }
-//
-//        while (fast != null) {
-//            fast = fast.next;
-//            slow = slow.next;
-//        }
-//        slow.next = slow.next.next;
-//
-//
-//        System.out.println(fast);
         ListNode fast = head;
         ListNode slow = head;
         for (int j = 0; j < n; j++) {
