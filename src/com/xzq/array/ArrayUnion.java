@@ -2,6 +2,7 @@ package com.xzq.array;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 // 数组求交集
@@ -26,9 +27,68 @@ public class ArrayUnion {
 //            System.out.println((i / 2) + "  " + (i % 2));
 //        }
 
-        int[] ints = new int[]{1, 1, 2, 35};
+//        int[] ints = new int[]{1, 1, 2, 35};
+//
+//        System.out.println(removeDuplicates(ints));
 
-        System.out.println(removeDuplicates(ints));
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        String s = strs[0];
+        for (String str : strs) {
+            while (!str.contains(s)) {
+                s = s.substring(0, s.length() - 1);
+            }
+        }
+
+        return s;
+    }
+
+    public static int lengthOfLongestSubstring(String s) {
+        if (s.length() <= 0) {
+            return 0;
+        }
+        int left = 0;
+        int right = 0;
+        int length = 0;
+
+        HashSet<Character> hashSet = new HashSet<>();
+        while (right < s.length()) {
+            if (hashSet.contains(s.charAt(right))) {
+                hashSet.remove(s.charAt(left--));
+            } else {
+                hashSet.add(s.charAt(right++));
+            }
+            length = hashSet.size() > length ? hashSet.size() : length;
+        }
+        return length;
+    }
+
+
+    public static int removeDuplicates1(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return 1;
+        }
+        int i = 0;
+        int j = 1;
+
+        while (j < nums.length) {
+            if (nums[i] == nums[j]) {
+                j++;
+            } else {
+                nums[i + 1] = nums[j];
+                i++;
+                j++;
+            }
+        }
+        return i + 1;
     }
 
 
