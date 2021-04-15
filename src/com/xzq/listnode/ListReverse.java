@@ -24,6 +24,38 @@ public class ListReverse {
         System.out.println("   " + removeNthFromEnd(listNode1, 2));
     }
 
+
+    //83. 删除排序链表中的重复元素
+//    https://lyl0724.github.io/2020/01/25/1/
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        head.next = deleteDuplicates(head.next);
+        if (head.val == head.next.val) {
+            head = head.next;
+        }
+        return head;
+    }
+//    https://lyl0724.github.io/2020/01/25/1/
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = head;
+        ListNode next = head.next;
+        while (next != null) {
+            if (pre.val == next.val) {
+                pre.next = next.next;
+                next = next.next;
+            } else {
+                pre = next;
+                next = next.next;
+            }
+        }
+        return head;
+    }
+
     // 合并两个有序链表
     public static void mergeTwoLists(ListNode l1, ListNode l2) {
 

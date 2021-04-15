@@ -21,6 +21,34 @@ public class ListNodeTest {
     }
 
 
+    public ListNode detectCycle(ListNode head) {
+        if ((head == null) || (head.next == null)) {
+            return null;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while ((fast != null) && (fast.next != null)) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (slow == fast) {
+                ListNode temp = head;
+                if (temp == fast) {
+                    return fast;
+                }
+                while (true) {
+                    fast = fast.next;
+                    temp = temp.next;
+                    if (fast == temp) {
+                        break;
+                    }
+                }
+                return fast;
+            }
+        }
+        return null;
+    }
+
+
     public static ListNode removeNthFromEnd1(ListNode head, int n) {
         ListNode fast = head;
         ListNode slow = head;
