@@ -7,22 +7,49 @@ public class ArrayUnion {
 
     public static void main(String[] args) {
 
-        int[] ints = new int[]{0, 1, 2, 2, 3};
+//        int[] ints = new int[]{0, 1, 2, 2, 3};
 //        rotate1(ints, 3);
-        System.out.println(singleNumber(ints));
+//        System.out.println(singleNumber(ints));
 
-//
-//        for (int i = 0; i < 10; i++) {
-//            System.out.print(i + " " + (i / 2) + "   ");
-//        }
-//        System.out.println();
-//        for (int i = 0; i < 10; i++) {
-//            System.out.print(i + " " + (i % 2) + "   ");
-//        }
+//        reverse(12345);
+        int[] ints = new int[]{3, 2, 4};
+        int[] sums = twoSum(ints, 6);
+        for (int anInt : sums) {
+            System.out.println(anInt);
+        }
     }
 
 
-    public int[] twoSum(int[] numbers, int target) {
+    // 整数反转
+    public static int reverse(int x) {
+        int sum = 0;
+        while (x != 0) {
+            int temp = x % 10;
+            sum = sum * 10 + temp;
+            x = x / 10;
+        }
+        return -1;
+    }
+
+
+    public static int[] twoSum(int[] numbers, int target) {
+        if (numbers == null || numbers.length < 2) {
+            return new int[]{0, 0};
+        }
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (int i = 0; i < numbers.length; i++) {
+            if (map.get(target - numbers[i]) != null) {
+                return new int[]{map.get(target - numbers[i]), i};
+            }
+            map.put(numbers[i], i);
+        }
+
+        return new int[]{0, 0};
+    }
+
+
+    // 有序数组
+    public int[] twoSum2(int[] numbers, int target) {
         if (numbers == null || numbers.length < 2) {
             return new int[]{0, 0};
         }
@@ -30,10 +57,10 @@ public class ArrayUnion {
         int j = numbers.length - 1;
         while (i < j) {
             if (numbers[i] + numbers[j] == target) {
-                return new int[]{i, j};
+                return new int[]{i + 1, j + 1};
             } else if (numbers[i] + numbers[j] < target) {
                 i++;
-            } else  if (numbers[i] + numbers[j] > target){
+            } else if (numbers[i] + numbers[j] > target) {
                 j--;
             }
         }
