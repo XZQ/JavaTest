@@ -1,5 +1,7 @@
 package com.xzq;
 
+import java.lang.ref.SoftReference;
+
 public class Main {
 
 

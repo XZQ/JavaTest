@@ -19,6 +19,41 @@ public class TreeMain {
         return res;
     }
 
+    //  深度优先搜索
+    public int rangeSumBST(TreeNode root, int low, int high) {
+//        if (root == null) {
+//            return 0;
+//        }
+//        if (root.val > high) {
+//            return rangeSumBST(root.left, low, high);
+//        }
+//        if (root.val < low) {
+//            return rangeSumBST(root.right, low, high);
+//        }
+//        return root.val + rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high);
+
+        int sum = 0;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node == null) {
+                continue;
+            }
+            if (node.val > high) {
+                queue.offer(node.left);
+            } else if (node.val < low) {
+                queue.offer(node.right);
+            } else {
+                sum += node.val;
+                queue.offer(node.left);
+                queue.offer(node.right);
+            }
+        }
+        return sum;
+
+    }
+
     private void dfs(TreeNode root, int depth) {
         if (root == null) {
             return;
