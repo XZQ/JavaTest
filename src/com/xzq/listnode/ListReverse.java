@@ -1,7 +1,5 @@
 package com.xzq.listnode;
 
-import java.util.LinkedList;
-
 public class ListReverse {
 
 
@@ -18,10 +16,42 @@ public class ListReverse {
         listNode1.next = listNode2;
 
 
-        double d = 44.4 + 21.6 + 3.12;
+    }
 
+    //    https://leetcode-cn.com/problems/palindrome-linked-list/comments/
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        slow = rerverse(slow.next);
+        while (slow != null) {
+            if (slow.val != head.val) {
+                return false;
+            }
+            head = head.next;
+            slow = slow.next;
+        }
+        return true;
+    }
 
-        System.out.println("   " + removeNthFromEnd(listNode1, 2));
+    public ListNode rerverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode prev = null;
+        while (head != null) {
+            ListNode temp = head.next;
+            head.next = prev;
+            prev = head;
+            head = temp;
+        }
+        return prev;
     }
 
 
@@ -37,7 +67,8 @@ public class ListReverse {
         }
         return head;
     }
-//    https://lyl0724.github.io/2020/01/25/1/
+
+    //    https://lyl0724.github.io/2020/01/25/1/
     public ListNode deleteDuplicates2(ListNode head) {
         if (head == null || head.next == null) {
             return head;

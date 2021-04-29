@@ -2,17 +2,26 @@ package com.xzq.strs;
 
 public class StringTest {
     public static void main(String[] args) {
-
-
 //        System.out.println(removeHelper(new StringBuilder("abcdessed")));
+//        StringBuilder sb = new StringBuilder("abcdessed");
+//        sb.delete(0, 2);
+//        System.out.println(sb);
 
+        System.out.println(isPalindrome(1121));
+    }
 
-        StringBuilder sb = new StringBuilder("abcdessed");
+    // https://leetcode-cn.com/problems/palindrome-number/ 回文数
+    public static boolean isPalindrome(int x) {
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+        int revertedNumber = 0;
+        while (x > revertedNumber) {
+            revertedNumber = x % 10 + revertedNumber * 10;
+            x /= 10;
+        }
+        return x == revertedNumber || x == revertedNumber / 10;
 
-        sb.delete(0, 2);
-
-
-        System.out.println(sb);
     }
 
 
