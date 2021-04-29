@@ -11,12 +11,12 @@ public class ArrayUnion {
 //        rotate1(ints, 3);
 //        System.out.println(singleNumber(ints));
 
-//        reverse(12345);
-        int[] ints = new int[]{3, 2, 4};
-        int[] sums = twoSum(ints, 6);
-        for (int anInt : sums) {
-            System.out.println(anInt);
-        }
+        System.out.println(reverse(1534236469));
+//        int[] ints = new int[]{3, 2, 4};
+//        int[] sums = twoSum(ints, 6);
+//        for (int anInt : sums) {
+//            System.out.println(anInt);
+//        }
     }
 
 
@@ -26,9 +26,12 @@ public class ArrayUnion {
         while (x != 0) {
             int temp = x % 10;
             sum = sum * 10 + temp;
+            if (sum > Integer.MAX_VALUE || sum < Integer.MIN_VALUE) {
+                return 0;
+            }
             x = x / 10;
         }
-        return -1;
+        return   sum>Math.pow(2,31)-1||sum<-Math.pow(2,31) ? 0:sum;
     }
 
 
@@ -36,7 +39,7 @@ public class ArrayUnion {
         if (numbers == null || numbers.length < 2) {
             return new int[]{0, 0};
         }
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < numbers.length; i++) {
             if (map.get(target - numbers[i]) != null) {
                 return new int[]{map.get(target - numbers[i]), i};
@@ -44,6 +47,15 @@ public class ArrayUnion {
             map.put(numbers[i], i);
         }
 
+
+//        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+//        for (int i = 0; i < numbers.length; i++) {
+//            if (map.get(target - numbers[i]) != null) {
+//                return new int[]{map.get(target - numbers[i]), i};
+//            }
+//            map.put(numbers[i], i);
+//        }
+//
         return new int[]{0, 0};
     }
 
