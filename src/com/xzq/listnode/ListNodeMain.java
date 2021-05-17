@@ -15,12 +15,183 @@ public class ListNodeMain {
         listNode3.next = listNode4;
         listNode2.next = listNode3;
         listNode1.next = listNode2;
-        System.out.println(reverseBetween(listNode1, 2, 4));
+    }
 
+    public ListNode swapPairs(ListNode head) {
+        // 终止条件
+        if (head == null || head.next == null) {
+            return head;
+        }
+        //  本级
+
+//        ListNode next = head.next;
+//        head.next = swapPairs(next.next);
+//        next.next = head;
+        ListNode next = head.next;
+        head.next = swapPairs(next.next);
+        next.next = head;
+
+        return next;
+
+        // 2
+//        ListNode one = head;
+//        ListNode two = one.next;
+//        ListNode three = two.next;
+//        two.next = one;
+//        one.next = swapPairs(three);
+//        return two;
     }
 
 
+    // https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/
+    // 剑指 Offer 52. 两个链表的第一个公共节点
+    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode h1 = headA;
+        ListNode h2 = headB;
+        while (h1 != h2) {
+            h1 = h1 == null ? headB : h1.next;
+            h2 = h2 == null ? headA : h2.next;
+        }
+        return h1;
+    }
 
+    //    https://leetcode-cn.com/problems/palindrome-linked-list/comments/
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast.next != null && fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        slow = rerverse(slow.next);
+        while (slow != null) {
+            if (slow.val != head.val) {
+                return false;
+            }
+            head = head.next;
+            slow = slow.next;
+        }
+        return true;
+    }
+
+    public ListNode rerverse(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode prev = null;
+        while (head != null) {
+            ListNode temp = head.next;
+            head.next = prev;
+            prev = head;
+            head = temp;
+        }
+        return prev;
+    }
+
+
+    //83. 删除排序链表中的重复元素
+//    https://lyl0724.github.io/2020/01/25/1/
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        head.next = deleteDuplicates(head.next);
+        if (head.val == head.next.val) {
+            head = head.next;
+        }
+        return head;
+    }
+
+    //    https://lyl0724.github.io/2020/01/25/1/
+    public ListNode deleteDuplicates2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = head;
+        ListNode next = head.next;
+        while (next != null) {
+            if (pre.val == next.val) {
+                pre.next = next.next;
+                next = next.next;
+            } else {
+                pre = next;
+                next = next.next;
+            }
+        }
+        return head;
+    }
+
+
+    /// 删除链表重复元素
+    // https://blog.csdn.net/xushibi4580/article/details/90354394
+    // https://blog.csdn.net/qq_42124842/article/details/93302815
+    // https://blog.csdn.net/Tong_Nan/article/details/89489621
+    public static ListNode removeRepeatLListNode(ListNode listNode) {
+        if (listNode == null || listNode.next == null) {
+            return listNode;
+        }
+        ListNode dunmy = new ListNode(0);
+        dunmy.next = listNode;
+
+        ListNode pre = dunmy;
+        ListNode temp = listNode;
+
+        while (temp != null && temp.next != null) {
+            if (temp.next.obj == temp.obj) {
+                Object obj = temp.obj;
+                while (temp != null && temp.obj == obj) {
+                    temp = temp.next;
+                }
+                pre.next = temp;
+            } else {
+                pre = temp;
+                temp = temp.next;
+            }
+        }
+        return listNode;
+    }
+
+
+    // 判断链表是否有环
+    public static boolean hasCycle2(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    // 查找中间元素
+    public static ListNode findMiddleNode(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        if (head.next == null) {
+            return head;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
 
     /// 拆分链表
     public boolean search(int[] nums, int target) {

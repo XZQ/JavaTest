@@ -1,13 +1,161 @@
 package com.xzq.strs;
 
+import java.util.Stack;
+
 public class StringTest {
     public static void main(String[] args) {
 //        System.out.println(removeHelper(new StringBuilder("abcdessed")));
 //        StringBuilder sb = new StringBuilder("abcdessed");
 //        sb.delete(0, 2);
 //        System.out.println(sb);
+//        System.out.println(isPalindrome(1121));
 
-        System.out.println(isPalindrome(1121));
+//        System.out.println(isValid("()[]"));
+//        System.out.println(climbStairs(4));
+
+//        System.out.println(fibonacci(4));
+//        System.out.println(fibonacci2(4));
+
+//        for (int i = 0; i < 10; i++) {
+////            System.out.println("i=" + i + "  " + (i & 1));
+//            System.out.println("i=" + i + "  " + (i & i) + "  " + (i & 1) + "  " + (i & 0));
+//            System.out.println();
+//        }
+//        numberOf1(5000);
+        System.out.println(power(20, 2));
+    }
+
+    public static double power(double d, int expect) {
+        double result = 1.0;
+        for (int i = 1; i <= expect; i++) {
+            result = result * d;
+        }
+        return result;
+    }
+
+    public static void numberOf1(int n) {
+        int count = 0;
+        int flag = 1;
+        while (flag != 0) {
+            if ((n & flag) != 0) {
+                count++;
+            }
+            flag = flag << 1;
+        }
+        System.out.println("count=" + count);
+    }
+
+    public int NumberOf2(int n) {
+        int count = 0;
+        while (n != 0) {
+            count++;
+            n = (n - 1) & n;
+        }
+        return count;
+    }
+
+
+    public static long fibonacci2(int n) {
+        if (n == 0) {
+            return 0L;
+        }
+        if (n == 1) {
+            return 1L;
+        }
+        long one = 1;
+        long two = 1;
+        long sum = 0L;
+        for (int i = 2; i < n; i++) {
+            sum = one + two;
+            one = two;
+            two = sum;
+        }
+        return sum;
+    }
+
+    public static long fibonacci(int n) {
+        if (n == 0) {
+            return 0L;
+        }
+        if (n == 1) {
+            return 1L;
+        }
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
+
+    public static int climbStairs(int n) {
+        if (n <= 2) {
+            return n;
+        }
+        int i1 = 1;
+        int i2 = 2;
+        for (int i = 3; i <= n; i++) {
+            int temp = i1 + i2;
+            i1 = i2;
+            i2 = temp;
+        }
+        return i2;
+    }
+
+    public int search(int[] nums, int target) {
+        if (nums.length <= 0) {
+            return -1;
+        }
+        if (target < nums[0] || target > nums[nums.length - 1]) {
+            return -1;
+        }
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (target > nums[mid]) {
+                left = mid + 1;
+            } else if (target < nums[mid]) {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+
+    //    https://leetcode-cn.com/problems/valid-parentheses/
+    public static boolean isValid(String s) {
+        if (s == null || s.isEmpty() || (s.length() % 2 != 0)) {
+            return false;
+        }
+        char[] chars = s.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        for (char c : chars) {
+            if (c == '(') {
+                stack.push(')');
+            } else if (c == '[') {
+                stack.push(']');
+            } else if (c == '{') {
+                stack.push('}');
+            } else if (stack.isEmpty() || c != stack.pop()) {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static boolean isValid2(String s) {
+        Stack<Character> stack = new Stack<Character>();
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                stack.push(')');
+            } else if (c == '[') {
+                stack.push(']');
+            } else if (c == '{') {
+                stack.push('}');
+            } else if (stack.isEmpty() || c != stack.pop()) {
+                return false;
+            }
+        }
+        return stack.isEmpty();
     }
 
     // https://leetcode-cn.com/problems/palindrome-number/ 回文数
@@ -21,7 +169,18 @@ public class StringTest {
             x /= 10;
         }
         return x == revertedNumber || x == revertedNumber / 10;
+    }
 
+    public boolean isPalindrome1(int x) {
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+        int revertNumber = 0;
+        while (x > revertNumber) {
+            revertNumber = revertNumber * 10 + x % 10;
+            x /= 10;
+        }
+        return x == revertNumber || x == revertNumber / 10;
     }
 
 
