@@ -158,6 +158,77 @@ public class ListNodeMain {
     }
 
 
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        if (head == null) {
+            return head;
+        }
+        if (k <= 0) {
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        for (int i = 0; i < k; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            fast = fast.next;
+            slow =slow.next;
+        }
+        return fast;
+    }
+
+
+    public static ListNode deleteNode(ListNode head, int val) {
+        if (head == null) {
+            return head;
+        }
+        if (head.val == val) {
+            return head.next;
+        }
+        ListNode cur = head;
+        ListNode pre = null;
+        while (cur.val != val) {
+            pre = cur;
+            cur = cur.next;
+        }
+        pre.next = pre.next.next;
+        return head;
+    }
+
+    //从尾到头打印链表
+    public static int[] reversePrint(ListNode head) {
+        ListNode node = head;
+        int count = 0;
+        while (node != null) {
+            node = node.next;
+            count++;
+        }
+        int[] nums = new int[count];
+        node = head;
+        for (int i = count - 1; i >= 0; i--) {
+            nums[i] = node.val;
+            node = node.next;
+        }
+        return nums;
+    }
+
+
+    //  链表反转
+    public static ListNode resver(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode pre = null;
+        while (head != null) {
+            ListNode temp = head.next;
+            head.next = pre;
+            pre = head;
+            head = temp;
+        }
+        return pre;
+    }
+
+
     // 判断链表是否有环
     public static boolean hasCycle2(ListNode head) {
         if (head == null || head.next == null) {

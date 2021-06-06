@@ -158,6 +158,72 @@ public class StringTest {
         return stack.isEmpty();
     }
 
+
+    public int[] exchange(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left < right) {
+            while (left < right && nums[left] % 2 != 0) {
+                left++;
+            }
+            while (left < right && nums[right] % 2 == 0) {
+                right--;
+            }
+            if (left < right) {
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
+            }
+        }
+        return nums;
+    }
+
+    public static int[] printNumbers(int n) {
+        int end = (int) Math.pow(10, n) - 1;
+        int[] res = new int[end];
+        for (int i = 0; i < end; i++) {
+            res[i] = i + 1;
+        }
+        return res;
+    }
+
+
+    public double myPow(double x, int n) {
+        if (n == 0) {
+            return 1;
+        } else if (n < 0) {
+            return 1 / (x * myPow(x, -n - 1));
+        } else if (n % 2 == 1) {
+            return x * myPow(x, n - 1);
+        } else {
+            return myPow(x * x, n / 2);
+        }
+    }
+
+
+    // 二维数组的查找
+    // https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/
+    public boolean findNumberIn2DArray(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int row = 0;
+        int column = columns - 1;
+        while (row < rows && column >= 0) {
+            int num = matrix[row][column];
+            if (target == num) {
+                return true;
+            } else if (target > num) {
+                row++;
+            } else {
+                column--;
+            }
+        }
+        return false;
+    }
+
     // https://leetcode-cn.com/problems/palindrome-number/ 回文数
     public static boolean isPalindrome(int x) {
         if (x < 0 || (x % 10 == 0 && x != 0)) {

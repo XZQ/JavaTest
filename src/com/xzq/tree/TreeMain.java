@@ -1,11 +1,15 @@
 package com.xzq.tree;
 
+
+import com.xzq.listnode.ListNode;
+
 import java.util.*;
 
 public class TreeMain {
 
 
     public static void main(String[] args) {
+
         int[] nums = new int[]{3, 2, 1, 6, 0, 5};
         System.out.println(maxTree(nums, 0, nums.length - 1));
     }
@@ -85,6 +89,284 @@ public class TreeMain {
         int left = maxDepth2(treeNode.left);
         int right = maxDepth2(treeNode.right);
         return Math.max(left, right) + 1;
+    }
+
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        if (A == null || B == null) {
+            return false;
+        }
+        return dfs(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
+    }
+
+    public boolean dfs(TreeNode A, TreeNode B) {
+        if (B == null) {
+            return true;
+        }
+        if (A == null) {
+            return false;
+        }
+        return A.val == B.val && dfs(A.left, B.left) && dfs(A.right, B.right);
+    }
+
+    public ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(-1);
+        ListNode pre = dummyHead;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                pre.next = l1;
+                pre = pre.next;
+                l1 = l1.next;
+            } else {
+                pre.next = l2;
+                pre = pre.next;
+                l2 = l2.next;
+            }
+        }
+        if (l1 != null) {
+            pre.next = l1;
+        }
+        if (l2 != null) {
+            pre.next = l2;
+        }
+        return dummyHead.next;
+    }
+
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        if (l1.val < l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l2.next, l1);
+            return l2;
+        }
+    }
+
+
+    int[] preorder;
+    HashMap<Integer, Integer> dic = new HashMap<>();
+
+    public TreeNode buildTree0(int[] preorder, int[] inorder) {
+        this.preorder = preorder;
+        for (int i = 0; i < inorder.length; i++)
+            dic.put(inorder[i], i);
+        return recur(0, 0, inorder.length - 1);
+    }
+
+    TreeNode recur(int root, int left, int right) {
+        if (left > right) return null;                          // 递归终止
+        TreeNode node = new TreeNode(preorder[root]);          // 建立根节点
+        int i = dic.get(preorder[root]);                       // 划分根节点、左子树、右子树
+        node.left = recur(root + 1, left, i - 1);              // 开启左子树递归
+        node.right = recur(root + i - left + 1, i + 1, right); // 开启右子树递归
+        return node;                                           // 回溯返回根节点
+    }
+
+
+    public TreeNode buildTree1(int[] preorder, int[] inorder) {
+        if (preorder == null || preorder.length == 0) {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[0]);
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        stack.push(root);
+        int inorderIndex = 0;
+        for (int i = 1; i < preorder.length; i++) {
+            int preorderVal = preorder[i];
+            TreeNode node = stack.peek();
+            if (node.val != inorder[inorderIndex]) {
+                node.left = new TreeNode(preorderVal);
+                stack.push(node.left);
+            } else {
+                while (!stack.isEmpty() && stack.peek().val == inorder[inorderIndex]) {
+                    node = stack.pop();
+                    inorderIndex++;
+                }
+                node.right = new TreeNode(preorderVal);
+                stack.push(node.right);
+            }
+        }
+        return root;
+    }
+
+
+    // https://truedei.blog.csdn.net/article/details/106655271
+//    static public TreeNode buildTree(int[] preorder, int[] inorder) {
+//        if (preorder == null || preorder.length == 0)
+//            return null;
+//
+//        //1，获取树的根节点的value值
+//        TreeNode root = new TreeNode(preorder[0]);
+//        //2，查找每一次根节点在中序遍历结果中的位置
+//        int index = findIndex(preorder[0], inorder);
+//
+//        //3,构建left左子树
+////        root.left = buildTree(左子树前序数组，左子树中序数组)
+//        root.left = buildTree(java.util.Arrays.copyOfRange(preorder, 1, index + 1),
+//                java.util.Arrays.copyOfRange(inorder, 0, index));
+//
+//
+//        //4，构建reght右子树
+////        root.right=buildTree(右子树前序数组，右子树中序数组)
+//        root.right = buildTree(Arrays.copyOfRange(preorder, index + 1, preorder.length),
+//                Arrays.copyOfRange(inorder, index + 1, inorder.length));
+//
+//
+//        return root;
+//    }
+
+    /**
+     * 查找根的index（在中序中的位置）的函数
+     *
+     * @param preorderData 节点
+     * @param inorder      每一次的中序数组
+     * @return 索引位置
+     */
+    static public int findIndex(int preorderData, int[] inorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            if (inorder[i] == preorderData)
+                return i;
+        }
+        return 0;
+    }
+
+    public static void levelOrder12(TreeNode root) {
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            root = queue.pop();
+            System.out.print(root.val + " ");
+            if (root.left != null) {
+                queue.add(root.left);
+            }
+            if (root.right != null) {
+                queue.add(root.right);
+            }
+        }
+    }
+
+
+    // 3 后序遍历（递归）
+    public static void nextOrder(TreeNode treeNode) {
+        if (treeNode == null) {
+            return;
+        }
+        preOrder(treeNode.left);
+        preOrder(treeNode.right);
+        System.out.print(treeNode.val + " ");
+    }
+
+    /**
+     * 左-->右-->根
+     * 非递归实现后序遍历
+     *
+     * @param root
+     */
+    public static void BackOrderStack(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode treeNode = root;
+        TreeNode lastVisit = null;   //标记每次遍历最后一次访问的节点
+
+        //节点不为空，结点入栈，并且指向下一个左孩子
+        while (treeNode != null || !stack.isEmpty()) {
+            while (treeNode != null) {
+                stack.push(treeNode);
+                treeNode = treeNode.left;
+            }
+            if (!stack.isEmpty()) {
+                treeNode = stack.pop();
+                /**
+                 * 这块就是判断treeNode是否有右孩子，
+                 * 如果没有，则输出treeNode.val，让lastVisit指向treeNode，并让treeNode为空
+                 * 如果有右孩子，将当前节点继续入栈，treeNode指向它的右孩子,继续重复循环
+                 */
+                if (treeNode.right == null || treeNode.right == lastVisit) {
+                    System.out.print(treeNode.val + " ");
+                    lastVisit = treeNode;
+                    treeNode = null;
+                } else {
+                    stack.push(treeNode);
+                    treeNode = treeNode.right;
+                }
+            }
+        }
+    }
+
+
+    // 2 中序遍历（递归）
+    public static void centerOrder(TreeNode treeNode) {
+        if (treeNode == null) {
+            return;
+        }
+        preOrder(treeNode.left);
+        System.out.print(treeNode.val + " ");
+        preOrder(treeNode.right);
+    }
+
+    /**
+     * 左-->根-->右
+     * 非递归实现中序遍历
+     *
+     * @param root
+     */
+    public static void MidOrderStack(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode treeNode = root;
+        while (treeNode != null || !stack.isEmpty()) {
+            while (treeNode != null) {
+                stack.push(treeNode);
+                treeNode = treeNode.left;
+            }
+            if (!stack.isEmpty()) {
+                treeNode = stack.pop();
+                System.out.print(treeNode.val + " ");
+                treeNode = treeNode.right;
+            }
+        }
+    }
+
+
+    // 1 前序遍历（递归）
+    public static void preOrder(TreeNode treeNode) {
+        if (treeNode == null) {
+            return;
+        }
+        System.out.print(treeNode.val + " ");
+        preOrder(treeNode.left);
+        preOrder(treeNode.right);
+    }
+
+    // 1 前序遍历（遍历）
+    public static void preOrder2(TreeNode treeNode) {
+        if (treeNode == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode node = treeNode;
+        while (node != null || !stack.isEmpty()) {
+            while (node != null) {
+                System.out.print(node.val + " ");
+                stack.push(node);
+                node = node.left;
+            }
+            if (!stack.isEmpty()) {
+                node = stack.pop();
+                node = node.right;
+            }
+        }
+    }
+
+
+    // 重建二叉树
+    // https://truedei.blog.csdn.net/article/details/106655271
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return null;
     }
 
 
