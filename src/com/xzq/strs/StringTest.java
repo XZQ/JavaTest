@@ -22,8 +22,22 @@ public class StringTest {
 //            System.out.println();
 //        }
 //        numberOf1(5000);
-        System.out.println(power(20, 2));
+        int[] ints = new int[]{3, 2, 2, 3};
+        System.out.println(removeElement(ints,3));
     }
+
+    public static int removeElement(int[] nums, int val) {
+        int n = nums.length;
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            if (nums[right] != val) {
+                nums[left] = nums[right];
+                left++;
+            }
+        }
+        return left;
+    }
+
 
     public static double power(double d, int expect) {
         double result = 1.0;
